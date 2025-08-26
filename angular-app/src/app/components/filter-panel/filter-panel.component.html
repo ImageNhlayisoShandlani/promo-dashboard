@@ -1,0 +1,30 @@
+<p>Select Filters:</p>
+<div class="filters">
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Category</mat-label>
+    <mat-select [(ngModel)]="category" (selectionChange)="emitFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let promoType of promoTypes" value="{{promoType}}">{{promoType}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="status" (selectionChange)="emitFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option value="active">Active</mat-option>
+      <mat-option value="inactive">Inactive</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Start Date</mat-label>
+    <input
+      matInput
+      type="date"
+      [(ngModel)]="startDate"
+      (change)="emitFilters()"
+    />
+  </mat-form-field>
+</div>

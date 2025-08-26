@@ -1,0 +1,24 @@
+<mat-card class="promo-card">
+  <mat-card-header>
+    <mat-card-title>{{ promo.title }}</mat-card-title>
+    <mat-card-subtitle>{{ promo.category }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      Active:
+      <strong [ngClass]="{ active: promo.active, inactive: !promo.active }">
+        {{ promo.active ? "Yes" : "No" }}
+      </strong>
+    </p>
+    <p>Start: {{ promo.startDate | date }}</p>
+    <p>End: {{ promo.endDate | date }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary"
+            (click)="toggleOptIn()">
+      {{ isSubscribed ? "Opt Out" : "Opt In" }}
+    </button>
+  </mat-card-actions>
+</mat-card>

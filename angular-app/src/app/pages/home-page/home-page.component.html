@@ -1,0 +1,19 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome to Mini Dashboard</h1>
+    <p>Track your promotions, categories, and subscriptions easily.</p>
+    <button mat-raised-button color="primary">Get Started</button>
+  </div>
+</section>
+
+<section class="home-promos">
+  <app-filter-panel (filtersChanged)="applyFilters($event)"></app-filter-panel>
+
+  <div class="promo-grid">
+      <app-promo-card
+        *ngFor="let promo of filteredPromos"
+        [promo]="promo"
+        (optInChange)="handleOptIn($event)">
+      </app-promo-card>
+    </div>
+</section>

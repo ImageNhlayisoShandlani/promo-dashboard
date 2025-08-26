@@ -1,0 +1,8 @@
+<h2>My Subscribed Promotions</h2>
+<div *ngIf="subscriptions.length; else noSubs" class="promo-grid">
+  <app-promo-card *ngFor="let promo of subscriptions" [promo]="promo"></app-promo-card>
+</div>
+
+<ng-template #noSubs>
+  <p>You haven't opted into any promotions yet.</p>
+</ng-template>
