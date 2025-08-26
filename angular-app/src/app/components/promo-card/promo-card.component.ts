@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { SubscriptionsService } from '../../services/subscriptions.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-promo-card',
@@ -33,7 +34,7 @@ export class PromoCardComponent implements OnChanges {
 
   isChecked = false;
 
-  constructor(private subscriptionsService: SubscriptionsService) {}
+  constructor(private subscriptionsService: SubscriptionsService, private router: Router) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['promo'] && this.promo) {
@@ -63,6 +64,7 @@ export class PromoCardComponent implements OnChanges {
     } else {
       parsedPromos = parsedPromos.filter((p) => String(p.id) !== String(promo.id));
       localStorage.setItem('savedPromosAngular', JSON.stringify(parsedPromos));
+      if(this.router.url === '/subscribed-promotions') window.location.reload();
       console.log('Promo removed:', promo);
     }
 

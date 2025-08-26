@@ -20,7 +20,7 @@ function App() {
 
         <Router>
           <Header />
-          <div className='container-fluid main--container'>
+          <div className='container-fluid'>
             <Routes>
               <Route path='' element={<Home />} />
               <Route path='/promotion/:type' element={<PromotionTypePage />} />

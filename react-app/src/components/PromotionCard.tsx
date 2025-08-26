@@ -6,6 +6,7 @@ import type { Promotion } from "../models/promotion";
 import Switch from "@mui/material/Switch";
 import { toast, ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function PromotionCard({ promo }: { promo: Promotion }) {
 
@@ -13,6 +14,7 @@ export default function PromotionCard({ promo }: { promo: Promotion }) {
     const parsedPromos: Promotion[] = savedPromotions ? JSON.parse(savedPromotions) : [];
     let isPromoExist = parsedPromos.find((p: Promotion) => p.id === promo.id);
     const [isOptedIn, setIsOptedIn] = useState(isPromoExist ? true : false);
+    const location = useLocation();
     const handleOnChange = (e: any) => {
 
         // localStorage.removeItem('savedPromotions');
@@ -42,6 +44,7 @@ export default function PromotionCard({ promo }: { promo: Promotion }) {
                 e.target.checked = false;
                 isPromoExist = undefined
                 setIsOptedIn(false);
+                if(location.pathname === '/subscriptions') window.location.reload();
             }
         }
     };
@@ -54,9 +57,9 @@ export default function PromotionCard({ promo }: { promo: Promotion }) {
 
     return <>
 
-        <Card className="col-md-4" sx={{ minWidth: 275, marginBottom: '1rem' }}>
+        <Card className="col-md-4" sx={{ minWidth: 275, marginBottom: '2rem', }}>
             <CardContent>
-                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 ,}}>
                     {promo?.title}
                 </Typography>
                 <Typography variant="h5" component="div">

@@ -69,6 +69,13 @@ button:focus-visible {
 .hero-content {
   max-width: 600px;
 }
+
+.active {
+  color: #0d6dc5 !important;
+  font-weight: bolder !important;
+  font-size: 18px !important;
+  font-style: italic;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

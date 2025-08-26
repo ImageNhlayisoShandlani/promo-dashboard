@@ -4,14 +4,12 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
     const promotions = useSelector((state: any) => state.promotions);
-    const promoTypes = Array.from(new Set(promotions.map((promo: any) => promo.category)));
+    const promoTypes: string[] = Array.from(new Set(promotions.map((promo: any) => promo.category)));
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
-                        <h4>Promo Dashboard React</h4>
-                    </NavLink>
+                        <h4 className="navbar-brand">Promo Dashboard React</h4>
                     <button
                         className="navbar-toggler"
                         type="button"

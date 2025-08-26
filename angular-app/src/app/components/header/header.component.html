@@ -20,7 +20,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <!-- Home Link -->
         <li class="nav-item">
-          <a class="nav-link active" routerLink="/">HOME</a>
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >HOME</a
+          >
         </li>
 
         <!-- Promo Types Dropdown -->
@@ -36,16 +42,28 @@
             Promo Types
           </a>
           <ul class="dropdown-menu" aria-labelledby="promoTypesDropdown">
-            <li *ngFor="let promoType of promoTypes" [routerLink]="['promo-types', promoType]"><a class="dropdown-item" href="/promotion/Casino">{{promoType}}</a></li>
+            <li *ngFor="let promoType of promoTypes">
+              <a
+                class="dropdown-item"
+                [routerLink]="['/promo-types', promoType]"
+                routerLinkActive="active"
+                >{{ promoType }}</a
+              >
+            </li>
           </ul>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/subscribed-promotions">Subscribed Promotions</a>
+          <a
+            class="nav-link"
+            routerLink="/subscribed-promotions"
+            routerLinkActive="active"
+            >Subscribed Promotions</a
+          >
         </li>
       </ul>
 
-      <div class="d-flex align-items-center" style="gap: 1rem;">
+      <div class="d-flex align-items-center" style="gap: 1rem">
         <a href="#"><i class="fa-brands fa-facebook"></i></a>
         <a href="#"><i class="fa-brands fa-twitter"></i></a>
         <a href="#"><i class="fa-brands fa-tiktok"></i></a>
@@ -53,4 +71,3 @@
     </div>
   </div>
 </nav>
-

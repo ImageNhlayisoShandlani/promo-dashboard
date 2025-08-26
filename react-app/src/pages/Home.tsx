@@ -57,49 +57,54 @@ export default function Home() {
                     <div className="hero-content">
                         <h1>Welcome to Mini Dashboard</h1>
                         <p>Track your promotions, categories, and subscriptions easily.</p>
-                        <button mat-raised-button color="primary">Get Started</button>
                     </div>
                 </section>
 
-                <section className="row" style={{ padding: '2rem' }}>
-                    <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
-                        <FormControl sx={{ flex: 1 }}>
-                            <InputLabel>Category</InputLabel>
-                            <Select
-                                value={category}
-                                label="Category"
-                                onChange={(e) => setCategory(e.target.value)}
-                            >
-                                <MenuItem value="all">All</MenuItem>
-                                <MenuItem value="Casino">Casino</MenuItem>
-                                <MenuItem value="Sports">Sports</MenuItem>
-                                <MenuItem value="Poker">Poker</MenuItem>
-                                <MenuItem value="Lotto">Lotto</MenuItem>
-                            </Select>
-                        </FormControl>
 
-                        <FormControl sx={{ flex: 1 }}>
-                            <InputLabel>Status</InputLabel>
-                            <Select
-                                value={status}
-                                label="Status"
-                                onChange={(e) => setStatus(e.target.value)}
-                            >
-                                <MenuItem value="all">All</MenuItem>
-                                <MenuItem value="active">Active</MenuItem>
-                                <MenuItem value="inactive">Inactive</MenuItem>
-                            </Select>
-                        </FormControl>
 
-                        <TextField
-                            style={{ flex: 1 }}
-                            label="Start After"
-                            type="date"
-                            InputLabelProps={{ shrink: true }}
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                        />
+
+                <div className="row" style={{ flex: 1, margin: "1rem", flexWrap: "wrap", }}>
+                    <div className="row">
+                        <p>Filter Promotions</p>
                     </div>
+                    <FormControl className="col-md-4">
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                            value={category}
+                            label="Category"
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="Casino">Casino</MenuItem>
+                            <MenuItem value="Sports">Sports</MenuItem>
+                            <MenuItem value="Poker">Poker</MenuItem>
+                            <MenuItem value="Lotto">Lotto</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl className="col-md-4" >
+                        <InputLabel>Status</InputLabel>
+                        <Select
+                            value={status}
+                            label="Status"
+                            onChange={(e) => setStatus(e.target.value)}
+                        >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="active">Active</MenuItem>
+                            <MenuItem value="inactive">Inactive</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <TextField className="col-md-4"
+                        label="Start After"
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                </div>
+                <section className="row" style={{ padding: '2rem' }}>
+
                     {
                         filteredPromotions.map((promo: Promotion, id: number) => {
                             return (

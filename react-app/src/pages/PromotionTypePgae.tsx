@@ -39,13 +39,14 @@ export default function PromotionTypePage() {
 
         return statusMatch && dateMatch;
     });
+
+    
     return <>
-    <section className="hero row">
-                    <div className="hero-content">
-                        <h1>View all {type} offers available</h1>
-                        <button mat-raised-button color="primary">Get Started</button>
-                    </div>
-                </section>
+        <section className="hero row">
+            <div className="hero-content">
+                <h1>View all {type} offers available</h1>
+            </div>
+        </section>
         <section className="row" style={{ padding: '2rem' }}>
             <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
                 <FormControl sx={{ flex: 1 }}>
