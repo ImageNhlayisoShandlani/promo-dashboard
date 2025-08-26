@@ -16,8 +16,11 @@ export class PromoTypeComponent implements OnInit{
 
   promos: Promotion[] = [];
   filteredPromos: Promotion[] = [];
+  promoType;
 
-  constructor(private promostionsService: PromotionsService, private route: ActivatedRoute){}
+  constructor(private promostionsService: PromotionsService, private route: ActivatedRoute){
+    this.promoType = this.route.snapshot.paramMap.get('promoType')
+  }
 
   ngOnInit(): void {
 

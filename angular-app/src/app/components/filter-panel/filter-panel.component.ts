@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { PromoTypesService } from '../../services/promo-types.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filter-panel',
@@ -18,14 +19,21 @@ export class FilterPanelComponent implements OnInit{
   status = '';
   startDate = '';
   promoTypes: string[] = [];
+  isCategoryPage = false;
 
-  constructor(private promoTypesService: PromoTypesService){}
+
+  constructor(private promoTypesService: PromoTypesService, private route: ActivatedRoute){}
 
   ngOnInit(): void {
     this.promoTypesService.getCategories().subscribe({
       next: data => this.promoTypes = data,
       error: err => console.log('Error fetching categories', err)
     });
+
+    this.route.paramMap.subscribe(params => {
+      const catId = params.get('promoType');
+      this.isCategoryPage = !!catId;
+    })
   }
   @Output() filtersChanged = new EventEmitter<{ category: string; status: string; startDate: string }>();
 

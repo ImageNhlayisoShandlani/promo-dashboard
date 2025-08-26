@@ -67,9 +67,9 @@ export default function PromotionCard({ promo }: { promo: Promotion }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <label htmlFor="" style={isOptedIn ? {color: "green", fontWeight: 'bolder'} : {}}>{isOptedIn ? 'Subscribed' : 'Subscribe'} :</label>
+                <label htmlFor="" style={isOptedIn ? { color: "green", fontWeight: 'bolder' } : {}}>{isOptedIn ? 'Subscribed' : 'Subscribe'} :</label>
                 <Switch value={'opt-in'} color="warning" checked={isOptedIn ? true : false} disabled={promo.active ? false : true} onChange={handleOnChange} />
-                
+
             </CardActions>
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
         </Card>

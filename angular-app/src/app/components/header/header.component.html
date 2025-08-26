@@ -1,70 +1,56 @@
-<mat-sidenav-container class="sidenav-container">
-  <!-- Mobile Fullscreen Drawer -->
-  <mat-sidenav #drawer mode="over" position="end" class="mobile-sidenav">
-    <div class="mobile-menu">
-      <button mat-button routerLink="/" (click)="drawer.close()">Home</button>
-      <button mat-button (click)="toggleCategories()">
-        Promo Types
-        <mat-icon class="expand-icon">
-          {{ showCategories ? "expand_less" : "expand_more" }}
-        </mat-icon>
-      </button>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <h4>Promo Dashboard Angular</h4>
+    </a>
 
-      <div *ngIf="showCategories" class="sub-menu">
-        <button mat-stroked-button *ngFor="let promoType of promoTypes" [routerLink]="['promo-types', promoType]" >{{ promoType }}</button>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Home Link -->
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/">HOME</a>
+        </li>
+
+        <!-- Promo Types Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="promoTypesDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Promo Types
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="promoTypesDropdown">
+            <li *ngFor="let promoType of promoTypes" [routerLink]="['promo-types', promoType]"><a class="dropdown-item" href="/promotion/Casino">{{promoType}}</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/subscribed-promotions">Subscribed Promotions</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center" style="gap: 1rem;">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
       </div>
-
-      <button
-        mat-button
-        routerLink="/subscribed-promotions"
-        (click)="drawer.close()"
-      >
-        Subscribed Promotions
-      </button>
     </div>
+  </div>
+</nav>
 
-    <div class="mobile-social">
-      <button mat-icon-button><mat-icon>facebook</mat-icon></button>
-      <button mat-icon-button><mat-icon>twitter</mat-icon></button>
-      <button mat-icon-button><mat-icon>linkedin</mat-icon></button>
-    </div>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <!-- Top Toolbar -->
-    <mat-toolbar color="primary" class="header-toolbar">
-      <!-- Logo -->
-      <span class="logo">Promo Dashboard</span>
-
-      <!-- Desktop Nav -->
-      <nav class="nav-links desktop-only">
-        <button mat-button routerLink="/">Home</button>
-        <button mat-button [matMenuTriggerFor]="categoriesMenu">
-          Promo Types
-        </button>
-        <mat-menu #categoriesMenu="matMenu">
-          <button mat-menu-item *ngFor="let promoType of promoTypes" [routerLink]="['promo-types', promoType]">
-            {{ promoType }}
-          </button>
-        </mat-menu>
-        <button mat-button routerLink="/subscribed-promotions">
-          Subscribed Promotions
-        </button>
-      </nav>
-
-      <span class="spacer"></span>
-
-      <!-- Desktop Social -->
-      <div class="social-icons desktop-only">
-        <button mat-icon-button><mat-icon>facebook</mat-icon></button>
-        <button mat-icon-button><mat-icon>instagram</mat-icon></button>
-        <button mat-icon-button><mat-icon>linkedin</mat-icon></button>
-      </div>
-
-      <!-- Mobile Hamburger -->
-      <button mat-icon-button class="mobile-only" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </mat-toolbar>
-  </mat-sidenav-content>
-</mat-sidenav-container>

@@ -23,7 +23,7 @@ import { FooterComponent } from './pages/footer/footer.component';
     MatGridListModule,
     MatToolbarModule,
     MatButtonModule,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

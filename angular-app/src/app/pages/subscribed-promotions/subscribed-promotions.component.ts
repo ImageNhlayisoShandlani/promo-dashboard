@@ -17,7 +17,8 @@ export class SubscribedPromotionsComponent implements OnInit{
   constructor(private subscriptionService: SubscriptionsService){}
 
   ngOnInit(){
-    this.subscriptions = this.subscriptionService.getSubscriptions().filter(p => p.optedIn);
+    const savedPromotions = localStorage.getItem('savedPromosAngular');
+    this.subscriptions = savedPromotions ? JSON.parse(savedPromotions) : [];
   }
 
 }

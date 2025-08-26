@@ -92,7 +92,7 @@ export default function Home() {
                         </FormControl>
 
                         <TextField
-                        style={{flex: 1}}
+                            style={{ flex: 1 }}
                             label="Start After"
                             type="date"
                             InputLabelProps={{ shrink: true }}
@@ -108,7 +108,7 @@ export default function Home() {
                         })
                     }
 
-                    
+
                 </section>
             </>);
 }

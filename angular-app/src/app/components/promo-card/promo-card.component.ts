@@ -1,41 +1,71 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Promotion } from '../../models/promotion.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { SubscriptionsService } from '../../services/subscriptions.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-promo-card',
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+  ],
   templateUrl: './promo-card.component.html',
-  styleUrl: './promo-card.component.scss',
+  styleUrls: ['./promo-card.component.scss'],
 })
-export class PromoCardComponent implements OnInit {
-  @Input() promo: any;
-  @Output() optInChange = new EventEmitter<any>();
+export class PromoCardComponent implements OnChanges {
+  @Input() promo!: Promotion;
+  @Output() optInChange = new EventEmitter<Promotion>();
 
-  isSubscribed = false;
-  constructor(private subscriptionsService: SubscriptionsService){}
+  isChecked = false;
 
-  ngOnInit(): void {
-    const subs = JSON.parse(localStorage.getItem('subscribedPromotions') || '[]');
-    this.isSubscribed = this.subscriptionsService.isSubscribed(this.promo.id);
+  constructor(private subscriptionsService: SubscriptionsService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['promo'] && this.promo) {
+      const savedPromotions = localStorage.getItem('savedPromosAngular');
+      const parsedPromos: Promotion[] = savedPromotions ? JSON.parse(savedPromotions) : [];
+
+      this.isChecked = parsedPromos.some(
+        (p) => String(p.id) === String(this.promo.id)
+      );
+
+      console.log(
+        `PromoCard init for promo ${this.promo.id} → checked: ${this.isChecked}`
+      );
+    }
   }
 
+  optInToggle(promo: Promotion) {
+    const savedPromotions = localStorage.getItem('savedPromosAngular');
+    let parsedPromos: Promotion[] = savedPromotions ? JSON.parse(savedPromotions) : [];
 
-  toggleOptIn() {
-
-    let subs = JSON.parse(localStorage.getItem('subscribedPromotions') || '[]');
-    if (this.isSubscribed) {
-      subs = subs.filter((p: any) => p.id !== this.promo.id);
-      this.isSubscribed = false;
+    if (this.isChecked) {
+      if (!parsedPromos.some((p) => String(p.id) === String(promo.id))) {
+        parsedPromos.push(promo);
+      }
+      localStorage.setItem('savedPromosAngular', JSON.stringify(parsedPromos));
+      console.log('Promo added:', promo);
     } else {
-      subs.push(this.promo);
-      this.isSubscribed = true;
+      parsedPromos = parsedPromos.filter((p) => String(p.id) !== String(promo.id));
+      localStorage.setItem('savedPromosAngular', JSON.stringify(parsedPromos));
+      console.log('Promo removed:', promo);
     }
 
-    localStorage.setItem('subscribedPromotions', JSON.stringify(subs));
-    this.optInChange.emit({ promo: this.promo, isSubscribed: this.isSubscribed });
+    this.optInChange.emit(promo);
   }
 }

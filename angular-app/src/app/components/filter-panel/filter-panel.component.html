@@ -3,9 +3,9 @@
   
   <mat-form-field appearance="fill">
     <mat-label>Category</mat-label>
-    <mat-select [(ngModel)]="category" (selectionChange)="emitFilters()">
+    <mat-select [(ngModel)]="category" (selectionChange)="emitFilters()" [disabled]="isCategoryPage">
       <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let promoType of promoTypes" value="{{promoType}}">{{promoType}}</mat-option>
+      <mat-option *ngFor="let promoType of promoTypes" value="{{promoType}}">{{ promoType}}</mat-option>
     </mat-select>
   </mat-form-field>
 

@@ -13,12 +13,8 @@
     </p>
     <p>Start: {{ promo.startDate | date }}</p>
     <p>End: {{ promo.endDate | date }}</p>
+    <mat-slide-toggle [(ngModel)]="isChecked" (change)="optInToggle(promo)">
+      {{ isChecked ? 'Subscribed' : 'Subcribe Now!'}}
+    </mat-slide-toggle>
   </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-raised-button color="primary"
-            (click)="toggleOptIn()">
-      {{ isSubscribed ? "Opt Out" : "Opt In" }}
-    </button>
-  </mat-card-actions>
 </mat-card>

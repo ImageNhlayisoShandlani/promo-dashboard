@@ -1,4 +1,10 @@
-<section class="home-promos">
+<section class="hero">
+  <div class="hero-content">
+    <h1>{{this.promoType}} Promotions</h1>
+  </div>
+</section>
+
+<section class="promos">
   <app-filter-panel (filtersChanged)="applyFilters($event)"></app-filter-panel>
 
   <div class="promo-grid">
