@@ -9,18 +9,11 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import React from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { setPromotions } from './app/store';
-import { getAllPromotions } from './shared/functions';
+import PromotionTypePage from './pages/PromotionTypePgae';
+import Subscriptions from './pages/Subscriptions';
 
 
 function App() {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-      //dispatch(setPromotions(getAllPromotions().then((res) => res)));
-  });
 
   return (
     <>
@@ -30,6 +23,8 @@ function App() {
           <div className='container-fluid main--container'>
             <Routes>
               <Route path='' element={<Home />} />
+              <Route path='/promotion/:type' element={<PromotionTypePage />} />
+              <Route path='/subscriptions' element={<Subscriptions />} />
             </Routes>
           </div>
           <Footer />

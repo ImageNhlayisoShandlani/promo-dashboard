@@ -1,20 +1,54 @@
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import type { Promotion } from "../models/promotion";
-import { getAllPromotions } from "../shared/functions";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setPromotions } from "../app/store";
+import { Switch, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import PromotionCard from "../components/PromotionCard";
 
 
 export default function Home() {
-    const promotions: Promotion[] = useSelector((state: any) => state.promotions);
+    const promotions = useSelector((state: any) => state.promotions);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
-    
+
+    const [category, setCategory] = useState<string>("all");
+    const [status, setStatus] = useState<string>("all");
+    const [date, setDate] = useState<string>("");
+    const getPromotions = async () => {
+        setLoading(true);
+        try {
+            const promos = axios.get(import.meta.env.VITE_API_URL).then((data) => {
+                dispatch(setPromotions(data.data));
+                setLoading(false);
+            });
+        } catch (e) {
+            setError(true);
+            setLoading(false);
+            console.log("Error fecthing data >>>>>>>>>>>>" + e);
+        }
+    }
+
+    const filteredPromotions = promotions.filter((promo: Promotion) => {
+        const categoryMatch = category === "all" || promo.category === category;
+        const statusMatch =
+            status === "all" ||
+            (status === "active" && promo.active) ||
+            (status === "inactive" && !promo.active);
+        const dateMatch =
+            !date || new Date(promo.startDate) >= new Date(date);
+
+        return categoryMatch && statusMatch && dateMatch;
+    });
+    useEffect(() => {
+        getPromotions();
+    }, [])
+
     return (
 
         promotions.length <= 0 ? <Loading /> :
@@ -28,89 +62,53 @@ export default function Home() {
                 </section>
 
                 <section className="row" style={{ padding: '2rem' }}>
+                    <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                        <FormControl sx={{ flex: 1 }}>
+                            <InputLabel>Category</InputLabel>
+                            <Select
+                                value={category}
+                                label="Category"
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
+                                <MenuItem value="all">All</MenuItem>
+                                <MenuItem value="Casino">Casino</MenuItem>
+                                <MenuItem value="Sports">Sports</MenuItem>
+                                <MenuItem value="Poker">Poker</MenuItem>
+                                <MenuItem value="Lotto">Lotto</MenuItem>
+                            </Select>
+                        </FormControl>
 
+                        <FormControl sx={{ flex: 1 }}>
+                            <InputLabel>Status</InputLabel>
+                            <Select
+                                value={status}
+                                label="Status"
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <MenuItem value="all">All</MenuItem>
+                                <MenuItem value="active">Active</MenuItem>
+                                <MenuItem value="inactive">Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <TextField
+                        style={{flex: 1}}
+                            label="Start After"
+                            type="date"
+                            InputLabelProps={{ shrink: true }}
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </div>
                     {
-                        promotions.map(({promo, id}: any) => {
-                            return <>
-                                <Card key={id} className="col-md-4" sx={{ minWidth: 275, marginBottom: '1rem' }}>
-                                    <CardContent>
-                                        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                                            {promo.title}
-                                        </Typography>
-                                        <Typography variant="h5" component="div">
-                                            {promo.category}
-                                        </Typography>
-                                        <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>Status: {promo.active}</Typography>
-                                        <Typography variant="body2">
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">Learn More</Button>
-                                    </CardActions>
-                                </Card>
-                            </>
+                        filteredPromotions.map((promo: Promotion, id: number) => {
+                            return (
+                                <PromotionCard key={id} promo={promo} />
+                            );
                         })
                     }
 
-                    {/* <Card className="col-md-4" sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                        Word of the Day
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        be{bull}nev{bull}o{bull}lent
-                    </Typography>
-                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>adjective</Typography>
-                    <Typography variant="body2">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
-            </Card>
-
-            <Card className="col-md-4" sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                        Word of the Day
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        be{bull}nev{bull}o{bull}lent
-                    </Typography>
-                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>adjective</Typography>
-                    <Typography variant="body2">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
-            </Card>
-
-            <Card className="col-md-4" sx={{ minWidth: 275 }}>
-                <CardContent>
-                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                        Word of the Day
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        be{bull}nev{bull}o{bull}lent
-                    </Typography>
-                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>adjective</Typography>
-                    <Typography variant="body2">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
-            </Card> */}
+                    
                 </section>
             </>);
 }

@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import './Header.css';
+import { useSelector } from "react-redux";
 
 export default function Header() {
+    const promotions = useSelector((state: any) => state.promotions);
+    const promoTypes = Array.from(new Set(promotions.map((promo: any) => promo.category)));
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,16 +44,20 @@ export default function Header() {
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
-                                    Promotions Types
+                                    Promo Types
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/category/electronics"><li>Electronics</li></NavLink>
+
+                                    {promoTypes.map((type: string, id: number) => {
+                                        return <NavLink key={id} className="dropdown-item" to={`/promotion/${type}`}><li>{type}</li></NavLink>
+                                    })}
+
                                 </ul>
                             </li>
 
                             <li className="nav-item">
                                 <NavLink
-                                    to="/about"
+                                    to="/subscriptions"
                                     className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
                                 >
                                     Subscribed Promotions
@@ -59,8 +66,8 @@ export default function Header() {
 
                         </ul>
 
-                        <div className="d-flex">
-                            <a href=""><i className="fa-brands fa-facebook"></i></a>
+                        <div className="d-flex" style={{flexDirection: 'row', gap: '1rem', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                            <a href="#"><i className="fa-brands fa-facebook"></i></a>
                             <a href=""> <i className="fa-brands fa-x-twitter"></i></a>
                             <a href=""><i className="fa-brands fa-tiktok"></i></a>
                         </div>
