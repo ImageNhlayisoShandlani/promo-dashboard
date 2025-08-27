@@ -49,7 +49,7 @@ npx json-server --watch db.json --port 3000
 ```
 
 - JSON Server will be available at: `http://localhost:3000`
-- Example endpoint: `http://localhost:3000/promotions`
+- Promotion endpoint: `http://localhost:3000/promotions`
 
 ---
 
@@ -58,17 +58,18 @@ npx json-server --watch db.json --port 3000
 ```bash
 cd angular-app
 npm install
-ng serve
+ng serve -o
 ```
 
-- Open in browser: `http://localhost:4200`
+- Opens in browser @: `http://localhost:4200`
 - Features:
   - Header/Footer with Bootstrap
   - Promotions list with filters
   - Opt-in/opt-out functionality (stored in Local Storage)
   - Category pages with dynamic filtering
   - Material UI components (cards, switches, etc.)
-
+  - Unit tests for promo card rendering (Jasmine/Karma)
+  
 ---
 
 ### 3. React App (Vite)
@@ -79,13 +80,14 @@ npm install
 npm run dev
 ```
 
-- Open in browser: `http://localhost:5173` (or displayed port)
+- Open browser to: `http://localhost:5173` (or displayed port)
 - Features:
   - Header/Footer with Bootstrap + FontAwesome
   - Promotions list with filters
   - Opt-in/opt-out functionality (stored in Local Storage)
   - Category pages with dynamic routing
   - Material UI components for cards, switches, etc.
+  - Unit tests for home page and promo card rendering (Vitest)
 
 ---
 
@@ -101,6 +103,18 @@ Both apps use environment-based API URLs:
 
 ---
 
+## Testing
+- Unit Tests:
+  - Angular: Minimal tests cover PromoCardComponent (display of title, category, status) and PromotionsService (API calls). Written with Jasmine/Karma.
+  - React: Minimal tests cover Home (loading, filters, list display) and PromotionCard (rendering). Written with Vitest/@testing-library/react.
+  - Note: Due to time constraints, tests focus on display and API success cases. In a full project, I’d expand to include filter logic, opt-in/out interactions, error handling, and responsive design tests.
+
+
+- Run Tests:
+  - Angular: cd angular-app && ng test
+  - React: cd react-app && npm run test
+
+---
 ## Notes
 
 - Opt-in/Opt-out is **handled locally** in Local Storage. JSON Server is **read-only** in this setup.
@@ -119,6 +133,4 @@ Both apps use environment-based API URLs:
 
 ---
 
-## License
 
-MIT License
